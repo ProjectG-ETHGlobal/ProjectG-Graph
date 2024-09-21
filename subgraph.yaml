@@ -1,0 +1,56 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ProjectG
+    network: gnosis-chiado
+    source:
+      address: "0x0391f91c8Ff757cB815811a93cBE1c9561D229f9"
+      abi: ProjectG
+      startBlock: 11907268
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AddUser
+        - Approval
+        - ApprovalForAll
+        - OrderCancelled
+        - OrderCreated
+        - OrderStatusMessage
+        - OrderUpdated
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - Transfer
+      abis:
+        - name: ProjectG
+          file: ./abis/ProjectG.json
+      eventHandlers:
+        - event: AddUser(bytes32,address)
+          handler: handleAddUser
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: OrderCancelled(string,uint256,indexed address)
+          handler: handleOrderCancelled
+        - event: OrderCreated(indexed address,uint256,string)
+          handler: handleOrderCreated
+        - event: OrderStatusMessage(string,string)
+          handler: handleOrderStatusMessage
+        - event: OrderUpdated(string,string)
+          handler: handleOrderUpdated
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/project-g.ts
